@@ -1,4 +1,4 @@
-import firebase from 'firebase/app'
+import firebase from 'firebase'
 
 const prod = {
   apiKey: 'AIzaSyAHCjwP8OWSHE1REWrzfFtQ3-Z5iZw2nlU',

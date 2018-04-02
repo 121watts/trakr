@@ -17,32 +17,16 @@ const App = () => (
       <Navigation />
       <hr />
       <Switch>
-        <Route
-          exact={true}
-          path={routes.LANDING}
-          component={() => <LandingPage />}
-        />
-        <Route
-          exact={true}
-          path={routes.SIGN_UP}
-          component={() => <SignUpPage />}
-        />
-        <Route
-          exact={true}
-          path={routes.SIGN_IN}
-          component={() => <SignInPage />}
-        />
+        <Route exact={true} path={routes.LANDING} component={LandingPage} />
+        <Route exact={true} path={routes.SIGN_UP} component={SignUpPage} />
+        <Route exact={true} path={routes.SIGN_IN} component={SignInPage} />
         <Route
           exact={true}
           path={routes.PASSWORD_FORGET}
-          component={() => <PasswordForgetPage />}
+          component={PasswordForgetPage}
         />
-        <Route exact={true} path={routes.HOME} component={() => <HomePage />} />
-        <Route
-          exact={true}
-          path={routes.ACCOUNT}
-          component={() => <AccountPage />}
-        />
+        <Route exact={true} path={routes.HOME} component={HomePage} />
+        <Route exact={true} path={routes.ACCOUNT} component={AccountPage} />
       </Switch>
     </>
   </Router>
