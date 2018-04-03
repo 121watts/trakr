@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, SFC, PureComponent } from 'react'
-import { Link } from 'react-router-dom'
-import { SIGN_UP } from 'src/constants/routes'
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
+import * as routes from 'src/constants/routes'
 
 import { auth } from 'src/firebase'
 
@@ -65,10 +65,12 @@ class SignUpForm extends PureComponent<any, SignUpFormState> {
   private handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { email, passwordOne } = this.state
+    const { history } = this.props
 
     try {
       await auth.doCreateUserWithEmailAndPassword(email, passwordOne)
       this.setState({ ...INITIAL_STATE })
+      history.push(routes.HOME)
     } catch (error) {
       console.warn(error)
       this.setState({ error: error.message })
@@ -87,20 +89,20 @@ class SignUpForm extends PureComponent<any, SignUpFormState> {
   }
 }
 
-const SignUp: SFC = () => (
+const SignUpPage: SFC<RouteComponentProps<{}>> = ({ history }) => (
   <div>
     <h1>Sign Up</h1>
-    <SignUpForm />
+    <SignUpForm history={history} />
   </div>
 )
 
 const SignUpLink: SFC = () => (
   <p>
     Don't have an account?
-    <Link to={SIGN_UP}>sign up</Link>
+    <Link to={routes.SIGN_UP}>sign up</Link>
   </p>
 )
 
-export default SignUp
+export default withRouter(SignUpPage)
 
 export { SignUpForm, SignUpLink }
