@@ -1,9 +1,11 @@
 import React from 'react'
 
+import { auth } from 'src/firebase'
+
 const SignOut = () => (
-  <div>
-    <h1>Sign Out</h1>
-  </div>
+  <button type="button" onClick={auth.signOut}>
+    Sign Out
+  </button>
 )
 
 export default SignOut
