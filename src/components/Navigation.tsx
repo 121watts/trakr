@@ -7,7 +7,7 @@ const Navigation = () => (
   <div>
     <ul>
       <li>
-        <Link to={routes.SIGN_UP}>Sign In</Link>
+        <Link to={routes.SIGN_UP}>Sign Up</Link>
       </li>
       <li>
         <Link to={routes.SIGN_IN}>Sign In</Link>
