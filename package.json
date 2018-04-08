@@ -2,6 +2,7 @@
   "name": "trakr",
   "version": "0.1.0",
   "private": true,
+  "license": "none",
   "dependencies": {
     "@types/react-router-dom": "^4.2.6",
     "firebase": "^4.12.1",

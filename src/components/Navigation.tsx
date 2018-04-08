@@ -38,7 +38,6 @@ interface Props {
 }
 
 const Navigation: SFC<Props> = ({ authUser }) => {
-  console.warn(authUser)
   return <>{authUser ? <NavigationAuth /> : <NavigationNonAuth />}</>
 }
 

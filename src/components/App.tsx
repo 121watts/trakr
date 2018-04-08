@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { firebase, types } from 'src/firebase'
+import { types } from 'src/firebase'
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 import Navigation from 'src/components/Navigation'
@@ -12,34 +12,16 @@ import AccountPage from 'src/components/Account'
 
 import * as routes from 'src/constants/routes'
 
-interface State {
+interface Props {
   authUser: types.User | null
 }
 
-class App extends PureComponent<any, State> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      authUser: null,
-    }
-  }
-
-  public componentDidMount() {
-    firebase.auth.onAuthStateChanged(authUser => {
-      console.warn(authUser)
-      if (authUser) {
-        return this.setState({ authUser })
-      }
-
-      this.setState({ authUser: null })
-    })
-  }
-
+class App extends PureComponent<Props> {
   public render() {
     return (
       <Router>
         <>
-          <Navigation authUser={this.state.authUser} />
+          <Navigation authUser={this.props.authUser} />
           <hr />
           <Switch>
             <Route exact={true} path={routes.LANDING} component={LandingPage} />
