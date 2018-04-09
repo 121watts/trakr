@@ -1,11 +1,6 @@
-import React, { PureComponent, SFC } from 'react'
+import React, { PureComponent } from 'react'
 import { types } from 'src/firebase'
-import {
-  Switch,
-  Route,
-  BrowserRouter as Router,
-  Redirect,
-} from 'react-router-dom'
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 import Navigation from 'src/components/Navigation'
 import LandingPage from 'src/components/Landing'
@@ -14,41 +9,12 @@ import SignInPage from 'src/components/SignIn'
 import PasswordForgetPage from 'src/components/PasswordForget'
 import HomePage from 'src/components/Home'
 import AccountPage from 'src/components/Account'
+import ProtectedRoute from 'src/components/ProtectedRoute'
 
 import * as routes from 'src/constants/routes'
 
-type AuthUser = types.User | null
-
 interface Props {
-  authUser: AuthUser
-}
-
-interface ProtectedRouteProps {
-  component: any
-  authUser: AuthUser
-  path: string
-  exact: boolean
-}
-
-const ProtectedRoute: SFC<ProtectedRouteProps> = ({
-  component: Comp,
-  authUser,
-  path,
-  ...rest
-}) => {
-  return (
-    <Route
-      path={path}
-      {...rest}
-      render={props => {
-        return authUser ? (
-          <Comp {...props} authUser={authUser} />
-        ) : (
-          <Redirect to={routes.SIGN_IN} />
-        )
-      }}
-    />
-  )
+  authUser: types.User | null
 }
 
 class App extends PureComponent<Props> {
