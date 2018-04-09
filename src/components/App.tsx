@@ -1,6 +1,11 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, SFC } from 'react'
 import { types } from 'src/firebase'
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+} from 'react-router-dom'
 
 import Navigation from 'src/components/Navigation'
 import LandingPage from 'src/components/Landing'
@@ -12,16 +17,48 @@ import AccountPage from 'src/components/Account'
 
 import * as routes from 'src/constants/routes'
 
+type AuthUser = types.User | null
+
 interface Props {
-  authUser: types.User | null
+  authUser: AuthUser
+}
+
+interface ProtectedRouteProps {
+  component: any
+  authUser: AuthUser
+  path: string
+  exact: boolean
+}
+
+const ProtectedRoute: SFC<ProtectedRouteProps> = ({
+  component: Comp,
+  authUser,
+  path,
+  ...rest
+}) => {
+  return (
+    <Route
+      path={path}
+      {...rest}
+      render={props => {
+        return authUser ? (
+          <Comp {...props} authUser={authUser} />
+        ) : (
+          <Redirect to={routes.SIGN_IN} />
+        )
+      }}
+    />
+  )
 }
 
 class App extends PureComponent<Props> {
   public render() {
+    const { authUser } = this.props
+
     return (
       <Router>
         <>
-          <Navigation authUser={this.props.authUser} />
+          <Navigation authUser={authUser} />
           <hr />
           <Switch>
             <Route exact={true} path={routes.LANDING} component={LandingPage} />
@@ -32,8 +69,18 @@ class App extends PureComponent<Props> {
               path={routes.PASSWORD_FORGET}
               component={PasswordForgetPage}
             />
-            <Route exact={true} path={routes.HOME} component={HomePage} />
-            <Route exact={true} path={routes.ACCOUNT} component={AccountPage} />
+            <ProtectedRoute
+              exact={true}
+              path={routes.HOME}
+              component={HomePage}
+              authUser={authUser}
+            />
+            <ProtectedRoute
+              exact={true}
+              path={routes.ACCOUNT}
+              component={AccountPage}
+              authUser={authUser}
+            />
           </Switch>
         </>
       </Router>
