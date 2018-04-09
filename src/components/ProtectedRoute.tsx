@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
   component: ComponentClass<any> | StatelessComponent<any>
   authUser: types.User | null
   path: string
-  exact: boolean
+  exact?: boolean
 }
 
 const ProtectedRoute: SFC<ProtectedRouteProps> = ({

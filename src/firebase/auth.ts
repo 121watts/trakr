@@ -1,10 +1,10 @@
-import { auth } from './firebase'
+import { auth, types } from './firebase'
 
 // sign up
 export const doCreateUserWithEmailAndPassword = (
   email: string,
   password: string
-): Promise<void> => auth.createUserWithEmailAndPassword(email, password)
+): Promise<types.User> => auth.createUserWithEmailAndPassword(email, password)
 
 // sign in
 export const doSignInWithEmailAndPassword = (

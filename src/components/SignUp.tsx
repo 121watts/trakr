@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent, SFC, PureComponent } from 'react'
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
+
+import { auth, db } from 'src/firebase'
 import { byPropKey } from 'src/components/helpers/forms'
 import * as routes from 'src/constants/routes'
-
-import { auth } from 'src/firebase'
 
 interface SignUpFormState {
   email: string
@@ -65,7 +65,14 @@ class SignUpForm extends PureComponent<any, SignUpFormState> {
     const { history } = this.props
 
     try {
-      await auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+      const authUser = await auth.doCreateUserWithEmailAndPassword(
+        email,
+        passwordOne
+      )
+
+      // create a user in the database
+      await db.doCreateUser(authUser.uid, email)
+
       this.setState({ ...INITIAL_STATE })
       history.push(routes.HOME)
     } catch (error) {
