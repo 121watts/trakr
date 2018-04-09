@@ -19,7 +19,6 @@ class WithAuth extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
-      console.warn(authUser)
       if (authUser) {
         return this.setState({ authUser })
       }

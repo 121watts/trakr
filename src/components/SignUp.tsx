@@ -72,7 +72,6 @@ class SignUpForm extends PureComponent<any, SignUpFormState> {
       this.setState({ ...INITIAL_STATE })
       history.push(routes.HOME)
     } catch (error) {
-      console.warn(error)
       this.setState({ error: error.message })
     }
   }

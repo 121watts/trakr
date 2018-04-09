@@ -3,6 +3,8 @@ import { History } from 'history'
 import { auth } from 'src/firebase'
 import { withRouter } from 'react-router-dom'
 import { SignUpLink } from 'src/components/SignUp'
+import { PasswordForgetLink } from 'src/components/PasswordForget'
+
 import * as routes from '../constants/routes'
 
 const byPropKey = (propertyName, value) => () => ({
@@ -91,6 +93,7 @@ const SignInPage = ({ history }) => (
   <div>
     <h1>Sign In</h1>
     <SignInForm history={history} />
+    <PasswordForgetLink />
     <SignUpLink />
   </div>
 )
