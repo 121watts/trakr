@@ -1,6 +1,7 @@
 import React, { PureComponent, FormEvent, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { auth } from 'src/firebase'
+import { byPropKey } from 'src/components/helpers/forms'
 
 interface Error {
   message: string
@@ -15,10 +16,6 @@ const INITIAL_STATE = {
   email: '',
   error: null,
 }
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
-})
 
 class PasswordForgetForm extends PureComponent<any, FormState> {
   constructor(props) {

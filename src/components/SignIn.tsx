@@ -4,12 +4,9 @@ import { auth } from 'src/firebase'
 import { withRouter } from 'react-router-dom'
 import { SignUpLink } from 'src/components/SignUp'
 import { PasswordForgetLink } from 'src/components/PasswordForget'
+import { byPropKey } from 'src/components/helpers/forms'
 
 import * as routes from '../constants/routes'
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
-})
 
 const INITIAL_STATE = {
   email: '',

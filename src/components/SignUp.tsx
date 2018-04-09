@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, SFC, PureComponent } from 'react'
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
+import { byPropKey } from 'src/components/helpers/forms'
 import * as routes from 'src/constants/routes'
 
 import { auth } from 'src/firebase'
@@ -58,10 +59,6 @@ class SignUpForm extends PureComponent<any, SignUpFormState> {
     )
   }
 
-  private byPropKey = (name: string, value: string) => {
-    return { [name as any]: value }
-  }
-
   private handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { email, passwordOne } = this.state
@@ -78,7 +75,7 @@ class SignUpForm extends PureComponent<any, SignUpFormState> {
 
   private handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
-    this.setState(this.byPropKey(name, value))
+    this.setState(byPropKey(name, value))
   }
 
   private get isInvalid(): boolean {
