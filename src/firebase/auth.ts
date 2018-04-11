@@ -1,4 +1,5 @@
-import { auth, types } from './firebase'
+import { auth } from './firebase'
+import { types } from './index'
 
 // sign up
 export const doCreateUserWithEmailAndPassword = (
