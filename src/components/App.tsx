@@ -26,7 +26,6 @@ class App extends PureComponent<Props> {
       <Router>
         <>
           <Navigation authUser={authUser} />
-          <hr />
           <Switch>
             <Route exact={true} path={routes.LANDING} component={LandingPage} />
             <Route exact={true} path={routes.SIGN_UP} component={SignUpPage} />

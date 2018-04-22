@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tab } from 'semantic-ui-react'
+import { Tab, Container } from 'semantic-ui-react'
 
 const panes = [
   { menuItem: 'Monday', render: () => <Tab.Pane>Monday</Tab.Pane> },
@@ -12,7 +12,12 @@ const panes = [
 ]
 
 const MealPlansPage = () => (
-  <Tab menu={{ fluid: true, vertical: true, tabular: 'right' }} panes={panes} />
+  <Container>
+    <Tab
+      menu={{ fluid: true, vertical: true, tabular: 'right' }}
+      panes={panes}
+    />
+  </Container>
 )
 
 export default MealPlansPage
