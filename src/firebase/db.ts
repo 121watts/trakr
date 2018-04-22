@@ -12,7 +12,7 @@ export const doCreateUser = (id, email) =>
 export const onceGetUsers = async () => {
   try {
     const usersSnapshot = await db.collection('users').get()
-    usersSnapshot.forEach(user => console.warn(user.data()))
+    return usersSnapshot
   } catch (error) {
     console.warn(error)
     return error

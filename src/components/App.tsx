@@ -10,6 +10,7 @@ import PasswordForgetPage from 'src/components/PasswordForget'
 import HomePage from 'src/components/Home'
 import AccountPage from 'src/components/Account'
 import ProtectedRoute from 'src/components/ProtectedRoute'
+import MealPlansPage from 'src/components/MealPlans/MealPlansPage'
 
 import * as routes from 'src/constants/routes'
 
@@ -45,6 +46,12 @@ class App extends PureComponent<Props> {
               exact={true}
               path={routes.ACCOUNT}
               component={AccountPage}
+              authUser={authUser}
+            />
+            <ProtectedRoute
+              exact={true}
+              path={routes.MEAL_PLANS}
+              component={MealPlansPage}
               authUser={authUser}
             />
           </Switch>

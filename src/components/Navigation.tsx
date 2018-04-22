@@ -17,6 +17,9 @@ const NavigationAuth: SFC = () => (
       <Link to={routes.ACCOUNT}>Account</Link>
     </li>
     <li>
+      <Link to={routes.MEAL_PLANS}>Meal Plans</Link>
+    </li>
+    <li>
       <SignOutButton />
     </li>
   </ul>
