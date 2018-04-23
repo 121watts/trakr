@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { types } from 'src/firebase'
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
 
 import Navigation from 'src/components/Navigation'
 import LandingPage from 'src/components/Landing'
@@ -24,7 +25,7 @@ class App extends PureComponent<Props> {
 
     return (
       <Router>
-        <>
+        <Container>
           <Navigation authUser={authUser} />
           <Switch>
             <Route exact={true} path={routes.LANDING} component={LandingPage} />
@@ -54,7 +55,7 @@ class App extends PureComponent<Props> {
               authUser={authUser}
             />
           </Switch>
-        </>
+        </Container>
       </Router>
     )
   }

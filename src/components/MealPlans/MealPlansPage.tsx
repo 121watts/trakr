@@ -1,23 +1,68 @@
 import React from 'react'
-import { Tab, Container } from 'semantic-ui-react'
+import { Tab } from 'semantic-ui-react'
+import MealDay from 'src/components/MealPlans/MealDay'
 
 const panes = [
-  { menuItem: 'Monday', render: () => <Tab.Pane>Monday</Tab.Pane> },
-  { menuItem: 'Tuesday', render: () => <Tab.Pane>Tuesday</Tab.Pane> },
-  { menuItem: 'Wednesday', render: () => <Tab.Pane>Wednesday</Tab.Pane> },
-  { menuItem: 'Thursday', render: () => <Tab.Pane>Thursday</Tab.Pane> },
-  { menuItem: 'Friday', render: () => <Tab.Pane>Friday</Tab.Pane> },
-  { menuItem: 'Saturday', render: () => <Tab.Pane>Saturday</Tab.Pane> },
-  { menuItem: 'Sunday', render: () => <Tab.Pane>Sunday</Tab.Pane> },
+  {
+    menuItem: 'Sunday',
+    render: () => (
+      <Tab.Pane>
+        <MealDay />
+      </Tab.Pane>
+    ),
+  },
+  {
+    menuItem: 'Monday',
+    render: () => (
+      <Tab.Pane>
+        <MealDay />
+      </Tab.Pane>
+    ),
+  },
+  {
+    menuItem: 'Tuesday',
+    render: () => (
+      <Tab.Pane>
+        <MealDay />
+      </Tab.Pane>
+    ),
+  },
+  {
+    menuItem: 'Wednesday',
+    render: () => (
+      <Tab.Pane>
+        <MealDay />
+      </Tab.Pane>
+    ),
+  },
+  {
+    menuItem: 'Thursday',
+    render: () => (
+      <Tab.Pane>
+        <MealDay />
+      </Tab.Pane>
+    ),
+  },
+  {
+    menuItem: 'Friday',
+    render: () => (
+      <Tab.Pane>
+        <MealDay />
+      </Tab.Pane>
+    ),
+  },
+  {
+    menuItem: 'Saturday',
+    render: () => (
+      <Tab.Pane>
+        <MealDay />
+      </Tab.Pane>
+    ),
+  },
 ]
 
 const MealPlansPage = () => (
-  <Container>
-    <Tab
-      menu={{ fluid: true, vertical: true, tabular: 'right' }}
-      panes={panes}
-    />
-  </Container>
+  <Tab menu={{ fluid: true, vertical: true, tabular: 'right' }} panes={panes} />
 )
 
 export default MealPlansPage
