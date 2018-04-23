@@ -2,7 +2,7 @@ import React from 'react'
 import { Tab } from 'semantic-ui-react'
 import MealDay from 'src/components/MealPlans/MealDay'
 
-const panes = [
+export const panes = [
   {
     menuItem: 'Sunday',
     render: () => (

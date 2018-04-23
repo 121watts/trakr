@@ -26,17 +26,18 @@ class Meal extends PureComponent<Props> {
         <Segment>
           <Form.Group>
             <Form.Field
+              id={mealID}
               control={Input}
               name="name"
               value={name}
               onChange={onChange}
               label="name"
-              placeholder="any other info"
+              placeholder="name your meal"
             />
           </Form.Group>
           <Form.Group>
             <Form.Field
-              mealID={mealID}
+              id={mealID}
               control={Input}
               name="time"
               value={time}
@@ -47,6 +48,7 @@ class Meal extends PureComponent<Props> {
           </Form.Group>
           <Form.Group>
             <Form.Field
+              id={mealID}
               control={Input}
               name="protein"
               value={protein}
@@ -57,6 +59,7 @@ class Meal extends PureComponent<Props> {
               width="2"
             />
             <Form.Field
+              id={mealID}
               control={Input}
               name="fats"
               value={fats}
@@ -67,6 +70,7 @@ class Meal extends PureComponent<Props> {
               width="2"
             />
             <Form.Field
+              id={mealID}
               control={Input}
               name="carbs"
               value={carbs}

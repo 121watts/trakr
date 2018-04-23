@@ -38,7 +38,7 @@ const NavigationAuth = ({ active, onClick }) => (
     />
     <Menu.Item
       as={Link}
-      content="Home"
+      content="Today"
       name="home"
       to={routes.HOME}
       onClick={onClick}

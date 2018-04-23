@@ -59,14 +59,6 @@ class MealDay extends PureComponent<any, State> {
     }
   }
 
-  handleTitleClick = (e, itemProps) => {
-    const { index } = itemProps
-    const { activeIndex } = this.state
-    const newIndex = activeIndex === index ? -1 : index
-
-    this.setState({ activeIndex: newIndex })
-  }
-
   public render() {
     const { activeIndex } = this.state
     return (
@@ -85,8 +77,26 @@ class MealDay extends PureComponent<any, State> {
     )
   }
 
-  private handleChange(e, { mealID, name, value }) {
-    console.warn(e, mealID, name, value)
+  private handleTitleClick = (e, itemProps): void => {
+    const { index } = itemProps
+    const { activeIndex } = this.state
+    const newIndex = activeIndex === index ? -1 : index
+
+    this.setState({ activeIndex: newIndex })
+  }
+
+  private handleChange = (e, { id, name, value }): void => {
+    const meals = this.state.meals.map(m => {
+      if (m.mealID === id) {
+        return { ...m, [name]: value }
+      }
+
+      return m
+    })
+
+    console.warn(meals.length)
+
+    this.setState({ meals })
   }
 }
 
