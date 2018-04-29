@@ -13,7 +13,7 @@ class Today extends PureComponent<any, any> {
               <Table.HeaderCell>Meal</Table.HeaderCell>
               <Table.HeaderCell>Lean Protein</Table.HeaderCell>
               <Table.HeaderCell>Healthy Fats</Table.HeaderCell>
-              <Table.HeaderCell>Heal Carbs</Table.HeaderCell>
+              <Table.HeaderCell>Healthy Carbs</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
