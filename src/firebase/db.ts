@@ -1,4 +1,5 @@
 import { db } from './firebase'
+import omit from 'lodash/omit'
 // import { User } from 'src/types'
 
 // user api
@@ -21,12 +22,61 @@ export const getUser = async id => {
   }
 }
 
-export const createMealPlan = async () => {
-  return null
-  // try {
-  //   const ref
-  // } catch (error) {
-  //   console.warn(error)
-  //   return error
-  // }
+export const createMealPlan = async data => {
+  try {
+    const ref = await db.collection('mealPlans').add({
+      name: 'My Meal Plan',
+    })
+
+    return ref.id
+  } catch (error) {
+    console.warn(error)
+    return error
+  }
+}
+
+export const createMeal = async data => {
+  try {
+    await db
+      .collection('meals')
+      .doc()
+      .set(data)
+  } catch (error) {
+    console.warn(error)
+    return error
+  }
+}
+
+// create meals creates all the meals for a particular day
+export const createMeals = async ({ meals }) => {
+  try {
+    const mealIds = await Promise.all(
+      meals.map(async meal => {
+        const ref = await db.collection('meals').add(omit(meal, ['mealId']))
+        return ref.id
+      })
+    )
+
+    return mealIds
+  } catch (error) {
+    console.warn(error)
+    return error
+  }
+}
+
+export const addMealsToMealPlan = async ({ day, mealIds, mealPlanId }) => {
+  try {
+    await db
+      .collection('mealPlans')
+      .doc(mealPlanId)
+      .set(
+        {
+          [day]: mealIds,
+        },
+        { merge: true }
+      )
+  } catch (error) {
+    console.warn(error)
+    return error
+  }
 }

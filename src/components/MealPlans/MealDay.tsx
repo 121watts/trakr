@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react'
-import { Accordion } from 'semantic-ui-react'
+import { Accordion, Button } from 'semantic-ui-react'
 import Meal from 'src/components/MealPlans/Meal'
+import uuid from 'uuid'
+import { db } from 'src/firebase'
 
 const meal = {
-  mealId: '1',
+  mealId: uuid.v4(),
   time: '6:00AM',
   name: 'meal 1',
   protein: '30',
@@ -17,7 +19,7 @@ const INITIAL_STATE = {
     meal,
     {
       ...meal,
-      mealId: '2',
+      mealId: uuid.v4(),
       name: 'workout',
       time: '8AM (1/2 intra 1/2 post)',
       fats: '0',
@@ -25,15 +27,15 @@ const INITIAL_STATE = {
     },
     {
       ...meal,
-      mealId: '3',
+      mealId: uuid.v4(),
       name: 'meal 2',
       time: '10AM',
       fats: '0',
       carbs: '70',
     },
-    { ...meal, mealId: '4', name: 'meal 3', time: '2PM', carbs: '40' },
-    { ...meal, mealId: '5', name: 'meal 4', time: '6PM', carbs: '30' },
-    { ...meal, mealId: '6', name: 'bedtime', time: 'bedtime' },
+    { ...meal, mealId: uuid.v4(), name: 'meal 3', time: '2PM', carbs: '40' },
+    { ...meal, mealId: uuid.v4(), name: 'meal 4', time: '6PM', carbs: '30' },
+    { ...meal, mealId: uuid.v4(), name: 'bedtime', time: 'bedtime' },
   ],
 }
 
@@ -50,44 +52,66 @@ interface State {
   mealPlanId: string | null
   activeIndex: number
   meals: MealState[]
+  status: string
 }
 
-class MealDay extends PureComponent<any, State> {
+interface Props {
+  day: string
+  mealPlanId: string | null
+}
+
+class MealDay extends PureComponent<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
       mealPlanId: this.props.mealPlanId,
       ...INITIAL_STATE,
+      status: 'done',
     }
   }
 
   public render() {
     const { activeIndex } = this.state
     return (
-      <Accordion
-        defaultActiveIndex={activeIndex}
-        onTitleClick={this.handleTitleClick}
-        panels={this.state.meals.map((m, itemIndex) => ({
-          itemIndex,
-          title: m.name,
-          content: itemIndex === this.state.activeIndex && (
-            <Meal
-              key={m.mealId}
-              {...m}
-              onChange={this.handleChange}
-              onSubmit={this.handleSubmit}
-            />
-          ),
-          key: m.mealId,
-        }))}
-      />
+      <>
+        <Accordion
+          defaultActiveIndex={activeIndex}
+          onTitleClick={this.handleTitleClick}
+          panels={this.state.meals.map((m, itemIndex) => ({
+            itemIndex,
+            title: m.name,
+            content: itemIndex === this.state.activeIndex && (
+              <Meal
+                key={m.mealId}
+                {...m}
+                onChange={this.handleChange}
+                onSubmit={this.handleSubmit}
+              />
+            ),
+            key: m.mealId,
+          }))}
+        />
+        <Button loading={this.isLoading} onClick={this.handleSubmit}>
+          Save
+        </Button>
+      </>
     )
   }
 
-  private handleSubmit = (): void => {
-    // create n meals and apply n mealIds to this users meal plan
+  private get isLoading(): boolean {
+    return this.state.status === 'loading'
+  }
 
-    console.warn(this.state)
+  private handleSubmit = async () => {
+    const { meals } = this.state
+    const { day, mealPlanId } = this.props
+
+    try {
+      const mealIds = await db.createMeals({ meals })
+      await db.addMealsToMealPlan({ day, mealIds, mealPlanId })
+    } catch (error) {
+      console.warn(error)
+    }
   }
 
   private handleTitleClick = (e, itemProps): void => {
@@ -106,8 +130,6 @@ class MealDay extends PureComponent<any, State> {
 
       return m
     })
-
-    console.warn(meals.length)
 
     this.setState({ meals })
   }

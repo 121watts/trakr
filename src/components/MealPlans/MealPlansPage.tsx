@@ -1,37 +1,42 @@
 import React, { PureComponent } from 'react'
 import { Tab, Header } from 'semantic-ui-react'
 import { withRouter, RouteComponentProps } from 'react-router'
-import { db } from 'src/firebase'
+import { db, types } from 'src/firebase'
 
 import MealDay from 'src/components/MealPlans/MealDay'
 const NEW = 'new'
 const EDIT = 'edit'
 
 const days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
 ]
+
+interface Props extends RouteComponentProps<any> {
+  authUser: types.AuthUser
+}
 
 interface State {
   mealPlanId: string | null
 }
 
-class MealPlansPage extends PureComponent<RouteComponentProps<any>, State> {
+class MealPlansPage extends PureComponent<Props, State> {
   state = {
     mealPlanId: null,
   }
 
   async componentDidMount() {
     if (this.mode !== 'new') {
+      // getMealPlan
       return
     }
 
-    const mealPlanId = await db.createMealPlan()
+    const mealPlanId = await db.createMealPlan(this.props.authUser.uid)
     this.setState({ mealPlanId })
   }
 
@@ -47,16 +52,17 @@ class MealPlansPage extends PureComponent<RouteComponentProps<any>, State> {
     )
   }
 
-  private get panes(): { menuItem: string; render: () => JSX.Element }[] {
-    const render = () => (
-      <Tab.Pane>
-        <MealDay mealPlanId={this.state.mealPlanId} />
-      </Tab.Pane>
-    )
-
+  private get panes(): {
+    menuItem: string
+    render: () => JSX.Element
+  }[] {
     return days.map(day => ({
-      menuItem: day,
-      render,
+      menuItem: day.toUpperCase(),
+      render: () => (
+        <Tab.Pane>
+          <MealDay mealPlanId={this.state.mealPlanId} day={day} />
+        </Tab.Pane>
+      ),
     }))
   }
 

@@ -1,5 +1,5 @@
 import React, { PureComponent, ChangeEvent, FormEvent } from 'react'
-import { Segment, Form, Input, Button } from 'semantic-ui-react'
+import { Segment, Form, Input } from 'semantic-ui-react'
 
 interface InputData {
   name: string
@@ -91,7 +91,6 @@ class Meal extends PureComponent<Props> {
               width="2"
             />
           </Form.Group>
-          <Button type="submit">Save</Button>
         </Segment>
       </Form>
     )
