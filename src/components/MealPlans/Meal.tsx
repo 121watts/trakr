@@ -1,5 +1,5 @@
-import React, { PureComponent, ChangeEvent } from 'react'
-import { Segment, Form, Input } from 'semantic-ui-react'
+import React, { PureComponent, ChangeEvent, FormEvent } from 'react'
+import { Segment, Form, Input, Button } from 'semantic-ui-react'
 
 interface InputData {
   name: string
@@ -7,7 +7,7 @@ interface InputData {
 }
 
 interface Props {
-  mealID: string
+  mealId: string
   name: string
   time: string
   protein: string
@@ -15,18 +15,28 @@ interface Props {
   fats: string
   notes?: string
   onChange: (e: ChangeEvent<HTMLInputElement>, data: InputData) => void
+  onSubmit: (e: FormEvent<HTMLFormElement>, data: InputData) => void
 }
 
 class Meal extends PureComponent<Props> {
   render() {
-    const { mealID, time, protein, carbs, fats, name, onChange } = this.props
+    const {
+      mealId,
+      time,
+      protein,
+      carbs,
+      fats,
+      name,
+      onChange,
+      onSubmit,
+    } = this.props
 
     return (
-      <Form>
+      <Form onSubmit={onSubmit}>
         <Segment>
           <Form.Group>
             <Form.Field
-              id={mealID}
+              id={mealId}
               control={Input}
               name="name"
               value={name}
@@ -37,7 +47,7 @@ class Meal extends PureComponent<Props> {
           </Form.Group>
           <Form.Group>
             <Form.Field
-              id={mealID}
+              id={mealId}
               control={Input}
               name="time"
               value={time}
@@ -48,7 +58,7 @@ class Meal extends PureComponent<Props> {
           </Form.Group>
           <Form.Group>
             <Form.Field
-              id={mealID}
+              id={mealId}
               control={Input}
               name="protein"
               value={protein}
@@ -59,7 +69,7 @@ class Meal extends PureComponent<Props> {
               width="2"
             />
             <Form.Field
-              id={mealID}
+              id={mealId}
               control={Input}
               name="fats"
               value={fats}
@@ -70,7 +80,7 @@ class Meal extends PureComponent<Props> {
               width="2"
             />
             <Form.Field
-              id={mealID}
+              id={mealId}
               control={Input}
               name="carbs"
               value={carbs}
@@ -81,6 +91,7 @@ class Meal extends PureComponent<Props> {
               width="2"
             />
           </Form.Group>
+          <Button type="submit">Save</Button>
         </Segment>
       </Form>
     )

@@ -5,7 +5,8 @@ import { types } from './index'
 export const doCreateUserWithEmailAndPassword = (
   email: string,
   password: string
-): Promise<types.User> => auth.createUserWithEmailAndPassword(email, password)
+): Promise<types.AuthUser> =>
+  auth.createUserWithEmailAndPassword(email, password)
 
 // sign in
 export const doSignInWithEmailAndPassword = (

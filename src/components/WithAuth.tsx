@@ -1,8 +1,14 @@
 import React, { ReactNode } from 'react'
-import { firebase, types } from 'src/firebase'
+import { firebase, types, db } from 'src/firebase'
+
+interface User {
+  email: string
+  mealPlans: string[]
+}
 
 interface State {
-  authUser: types.User | null
+  authUser: types.AuthUser | null
+  user: User | null
 }
 
 interface Props {
@@ -14,15 +20,18 @@ class WithAuth extends React.PureComponent<Props, State> {
     super(props)
     this.state = {
       authUser: null,
+      user: null,
     }
   }
 
   public componentDidMount() {
-    firebase.auth.onAuthStateChanged(authUser => {
+    firebase.auth.onAuthStateChanged(async authUser => {
       if (authUser) {
-        return this.setState({ authUser })
+        const user = await db.getUser(authUser.uid)
+        return this.setState({ authUser, user })
       }
 
+      console.warn('user no longer authed')
       this.setState({ authUser: null })
     })
   }

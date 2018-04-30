@@ -5,7 +5,7 @@ import * as routes from 'src/constants/routes'
 
 interface ProtectedRouteProps {
   component: ComponentClass<any> | StatelessComponent<any>
-  authUser: types.User | null
+  authUser: types.AuthUser | null
   path: string
   exact?: boolean
 }

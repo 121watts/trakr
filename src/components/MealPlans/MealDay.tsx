@@ -3,7 +3,7 @@ import { Accordion } from 'semantic-ui-react'
 import Meal from 'src/components/MealPlans/Meal'
 
 const meal = {
-  mealID: '1',
+  mealId: '1',
   time: '6:00AM',
   name: 'meal 1',
   protein: '30',
@@ -17,7 +17,7 @@ const INITIAL_STATE = {
     meal,
     {
       ...meal,
-      mealID: '2',
+      mealId: '2',
       name: 'workout',
       time: '8AM (1/2 intra 1/2 post)',
       fats: '0',
@@ -25,20 +25,20 @@ const INITIAL_STATE = {
     },
     {
       ...meal,
-      mealID: '3',
+      mealId: '3',
       name: 'meal 2',
       time: '10AM',
       fats: '0',
       carbs: '70',
     },
-    { ...meal, mealID: '4', name: 'meal 3', time: '2PM', carbs: '40' },
-    { ...meal, mealID: '5', name: 'meal 4', time: '6PM', carbs: '30' },
-    { ...meal, mealID: '6', name: 'bedtime', time: 'bedtime' },
+    { ...meal, mealId: '4', name: 'meal 3', time: '2PM', carbs: '40' },
+    { ...meal, mealId: '5', name: 'meal 4', time: '6PM', carbs: '30' },
+    { ...meal, mealId: '6', name: 'bedtime', time: 'bedtime' },
   ],
 }
 
 interface MealState {
-  mealID: string
+  mealId: string
   name: string
   time: string
   protein: string
@@ -47,6 +47,7 @@ interface MealState {
 }
 
 interface State {
+  mealPlanId: string | null
   activeIndex: number
   meals: MealState[]
 }
@@ -55,6 +56,7 @@ class MealDay extends PureComponent<any, State> {
   constructor(props) {
     super(props)
     this.state = {
+      mealPlanId: this.props.mealPlanId,
       ...INITIAL_STATE,
     }
   }
@@ -69,12 +71,23 @@ class MealDay extends PureComponent<any, State> {
           itemIndex,
           title: m.name,
           content: itemIndex === this.state.activeIndex && (
-            <Meal key={m.mealID} {...m} onChange={this.handleChange} />
+            <Meal
+              key={m.mealId}
+              {...m}
+              onChange={this.handleChange}
+              onSubmit={this.handleSubmit}
+            />
           ),
-          key: m.mealID,
+          key: m.mealId,
         }))}
       />
     )
+  }
+
+  private handleSubmit = (): void => {
+    // create n meals and apply n mealIds to this users meal plan
+
+    console.warn(this.state)
   }
 
   private handleTitleClick = (e, itemProps): void => {
@@ -87,7 +100,7 @@ class MealDay extends PureComponent<any, State> {
 
   private handleChange = (e, { id, name, value }): void => {
     const meals = this.state.meals.map(m => {
-      if (m.mealID === id) {
+      if (m.mealId === id) {
         return { ...m, [name]: value }
       }
 

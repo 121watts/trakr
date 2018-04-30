@@ -16,7 +16,7 @@ import MealPlansPage from 'src/components/MealPlans/MealPlansPage'
 import * as routes from 'src/constants/routes'
 
 interface Props {
-  authUser: types.User | null
+  authUser: types.AuthUser | null
 }
 
 class App extends PureComponent<Props> {
@@ -51,6 +51,12 @@ class App extends PureComponent<Props> {
             <ProtectedRoute
               exact={true}
               path={routes.MEAL_PLANS}
+              component={MealPlansPage}
+              authUser={authUser}
+            />
+            <ProtectedRoute
+              exact={true}
+              path={routes.MEAL_PLANS_NEW}
               component={MealPlansPage}
               authUser={authUser}
             />

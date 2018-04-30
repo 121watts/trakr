@@ -1,3 +1,3 @@
 import { User } from 'firebase'
 
-export { User }
+export { User as AuthUser }
