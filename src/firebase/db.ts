@@ -53,7 +53,7 @@ export const createMeals = async ({ meals }) => {
     const mealIds = await Promise.all(
       meals.map(async meal => {
         const ref = await db.collection('meals').add(omit(meal, ['mealId']))
-        return ref.id
+        return { mealId: ref.id }
       })
     )
 
